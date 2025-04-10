@@ -22,12 +22,12 @@ def parse_labels(text):
     return labels
 
 
-def main(feature_txt, labels_txt):
+def main(feature_txt, labels_txt):  
     # DATA READ
     X = parse_features(feature_txt) #(n_samples, n_features)
     y = parse_labels(labels_txt) #(n_samples, )
     
-    # DATA SPLIT
+        # DATA SPLIT
     N = len(X)
     train_size = N // 2
     test_size = N - train_size

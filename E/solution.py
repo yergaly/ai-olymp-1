@@ -1,4 +1,4 @@
-import sklearn
+import sklearn, re
 import pandas as pd
 import numpy as np
 
@@ -7,8 +7,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression, RidgeClassifier, SGDClassifier
 from sklearn.svm import LinearSVC
 from sklearn.naive_bayes import ComplementNB, MultinomialNB
-from sklearn.ensemble import RandomForestClassifier
-import re
+from sklearn.ensemble import RandomForestClassifier, VotingClassifier
 
 def clean(text):
     text = text.lower()
@@ -17,30 +16,31 @@ def clean(text):
 
 def extract_features(text_list):
     return text_list
-    #return [clean(t) for t in text_list]
+
 
 
 class Model():
     def __init__(self):
-        self.vectorizer = TfidfVectorizer(
-            ngram_range=(1, 2),
-            max_features=100000,
-            stop_words='english',
-            sublinear_tf=True)
-        #self.classifier = LogisticRegression(solver='liblinear',multi_class='auto',max_iter=1000)
-        #self.classifier = LinearSVC(max_iter=1000)
-        self.classifier = ComplementNB(alpha=0.5, fit_prior=True)
-        #self.classifier = RidgeClassifier()
-        #self.classifier = SGDClassifier(loss='log', max_iter=1000, random_state=42)
-        #self.classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+        clf1 = ComplementNB(alpha=0.5, fit_prior=True)
+        clf2 = ComplementNB(alpha=0.3, fit_prior=True)
+        clf3 = ComplementNB(alpha=0.1, fit_prior=True)
+        
+        self.classifier = make_pipeline(
+            TfidfVectorizer(
+                ngram_range=(1, 3),
+                max_features=500000,
+                stop_words='english',
+                sublinear_tf=True,
+                dtype=np.float32
+            ),
+            VotingClassifier(
+                estimators=[('nb1', clf1),('nb2', clf2),('nb3', clf3)],voting='hard'))
 
     def fit(self, X_list, y_list):
-        X_vect = self.vectorizer.fit_transform(X_list)
-        self.classifier.fit(X_vect, y_list)
+        self.classifier.fit(X_list, y_list)
 
     def predict(self, X_list):
-        X_vect = self.vectorizer.transform(X_list)
-        return self.classifier.predict(X_vect).tolist()
+        return self.classifier.predict(X_list).tolist()
 
 
 

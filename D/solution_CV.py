@@ -12,7 +12,7 @@ def extract_features(a):
         gy = convolve(i, np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]]), mode='reflect')
         return gx, gy
 
-    def ch(i, cs=(7, 7), bs=(2, 2), bn=9):
+    def ch(i, cs=(7, 7), bs=(2,3), bn=5):
         gx, gy = cg(i)
         m = np.sqrt(gx**2 + gy**2)
         o = np.arctan2(gy, gx) * (180 / np.pi) % 180
@@ -40,9 +40,9 @@ def extract_features(a):
         i = (i - np.min(i)) / (np.max(i) - np.min(i) + 1e-5)
         hf = ch(i)
         fl.append(hf)
-
     
-    pca = PCA(n_components=20)
+    
+    pca = PCA(n_components=20,svd_solver='auto', random_state=1)
     X = pca.fit_transform(fl)
     return X
 

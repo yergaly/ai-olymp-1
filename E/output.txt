@@ -72,8 +72,8 @@ Finance
 Mathematics
 Biology
 Mathematics
-AI
 Economics
+Economics
 Mathematics
 Finance
 Finance
@@ -110,10 +110,10 @@ AI
 AI
 Mathematics
 Economics
-AI
 Finance
 Finance
 Finance
+Finance
 Economics
 AI
 Mathematics
@@ -145,7 +145,7 @@ Finance
 Biology
 Physics
 Biology
-Mathematics
+Biology
 AI
 Mathematics
 AI
@@ -201,7 +201,7 @@ Mathematics
 Mathematics
 Mathematics
 Finance
-Finance
+Physics
 Finance
 Economics
 AI
@@ -209,7 +209,7 @@ AI
 AI
 Physics
 Economics
-Biology
+AI
 Mathematics
 Biology
 Finance
@@ -294,7 +294,7 @@ Finance
 AI
 Physics
 Biology
-Economics
+Finance
 Economics
 Mathematics
 Economics
@@ -329,7 +329,7 @@ Economics
 Physics
 Biology
 Physics
-AI
+Biology
 Physics
 Finance
 Economics
@@ -347,7 +347,7 @@ Economics
 Biology
 Mathematics
 Physics
-Physics
+AI
 Finance
 Biology
 Biology
@@ -376,15 +376,15 @@ Mathematics
 Biology
 Finance
 Finance
-Physics
+AI
 Mathematics
 AI
-Physics
+Mathematics
 Mathematics
 Economics
 Physics
 Economics
-Mathematics
+Finance
 Physics
 Finance
 AI
@@ -427,7 +427,7 @@ Biology
 Biology
 Physics
 Mathematics
-AI
+Finance
 AI
 Physics
 Finance
@@ -547,7 +547,7 @@ Physics
 Economics
 Finance
 Finance
-Mathematics
+Finance
 Physics
 AI
 Physics
@@ -633,7 +633,7 @@ Finance
 Finance
 Mathematics
 Mathematics
-AI
+Economics
 Mathematics
 Finance
 Physics
@@ -705,7 +705,7 @@ Mathematics
 Physics
 Economics
 AI
-AI
+Physics
 Economics
 Biology
 Biology
@@ -746,7 +746,7 @@ Finance
 Finance
 Biology
 Physics
-AI
+Biology
 Physics
 Economics
 Mathematics
@@ -884,7 +884,7 @@ Economics
 AI
 Mathematics
 Finance
-Physics
+Biology
 AI
 AI
 Mathematics
@@ -1074,7 +1074,7 @@ Biology
 Finance
 Finance
 AI
-AI
+Physics
 Finance
 Mathematics
 Finance
@@ -1092,7 +1092,7 @@ Mathematics
 Physics
 Mathematics
 Mathematics
-Finance
+AI
 Mathematics
 Physics
 Physics
@@ -1129,7 +1129,7 @@ Mathematics
 Economics
 Physics
 Finance
-Mathematics
+AI
 Economics
 Physics
 Physics
@@ -1198,7 +1198,7 @@ Mathematics
 AI
 Physics
 Finance
-Finance
+AI
 Mathematics
 Physics
 Finance
@@ -1234,8 +1234,8 @@ Economics
 Mathematics
 AI
 Economics
-Physics
 Physics
+AI
 Mathematics
 Physics
 Mathematics
@@ -1372,8 +1372,8 @@ AI
 Physics
 Finance
 Finance
-Economics
 Biology
+Biology
 Economics
 AI
 AI
@@ -1431,8 +1431,8 @@ Economics
 Economics
 Biology
 Physics
-Mathematics
 Mathematics
+Economics
 Mathematics
 AI
 Finance
@@ -1451,14 +1451,14 @@ Mathematics
 Mathematics
 Economics
 Physics
-Biology
+AI
 Physics
 Physics
 AI
 Economics
 AI
 AI
-Physics
+Mathematics
 Mathematics
 Economics
 Physics
@@ -1489,7 +1489,7 @@ Finance
 Mathematics
 Biology
 AI
-Economics
+Finance
 Finance
 Economics
 Economics
