@@ -2,7 +2,8 @@ import numpy as np
 from io import StringIO
 from scipy.ndimage import sobel
 from scipy.stats import entropy
-from scipy.ndimage import convolve, gaussian_filter
+from scipy.ndimage import convolve, gaussian_filter, percentile_filter, median_filter
+
 from sklearn.decomposition import PCA
 
 
@@ -12,9 +13,9 @@ def extract_features(a):
         gy = convolve(i, np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]]), mode='reflect')
         return gx, gy
 
-    def ch(i, cs=(7, 7), bs=(2,3), bn=5):
+    def ch(i, cs=(4, 4), bs=(2, 3), bn=5):
         gx, gy = cg(i)
-        m = np.sqrt(gx**2 + gy**2)
+        m = np.sqrt(gx ** 2 + gy ** 2)
         o = np.arctan2(gy, gx) * (180 / np.pi) % 180
         ncx = i.shape[1] // cs[1]
         ncy = i.shape[0] // cs[0]
@@ -31,20 +32,24 @@ def extract_features(a):
         for y in range(nby):
             for x in range(nbx):
                 b = h[y:y + bs[0], x:x + bs[1], :]
-                nb[y, x] = b / np.sqrt(np.sum(b**2) + 1e-5)
+                nb[y, x] = b / np.sqrt(np.sum(b ** 2) + 1e-5)
 
         return nb.ravel()
 
     fl = []
     for i in a:
-        i = (i - np.min(i)) / (np.max(i) - np.min(i) + 1e-5)
-        hf = ch(i)
-        fl.append(hf)
-    
-    
-    pca = PCA(n_components=20,svd_solver='auto', random_state=1)
+        i = gaussian_filter(i, sigma=1)
+        i = median_filter(i, size=3)
+        i = percentile_filter(i, percentile=65, size=3)
+
+        i = (i - i.min()) / (i.max() - i.min() + 1e-5)
+        fl.append(ch(i))
+
+
+    pca = PCA(n_components=20, svd_solver='auto', random_state=1)
     X = pca.fit_transform(fl)
     return X
+
 
 def extract_features0(arr):
     a = []
@@ -80,14 +85,14 @@ def extract_features0(arr):
             area_ratio = 0
         z = []
         for y in [0, 1, 2]:
-            bb = i[y*28//3:(y+1)*28//3, 10:18]
+            bb = i[y * 28 // 3:(y + 1) * 28 // 3, 10:18]
             z.append(bb.mean())
         for x in [0, 1, 2]:
-            bb = i[10:18, x*28//3:(x+1)*28//3]
+            bb = i[10:18, x * 28 // 3:(x + 1) * 28 // 3]
             z.append(bb.mean())
         b = [mean, std, median, iqr, contrast,
-            edge_mean, edge_std, edge_density, ent,
-            fg_ratio, ink, cent_dist,aspect, area_ratio] + z[:6]
+             edge_mean, edge_std, edge_density, ent,
+             fg_ratio, ink, cent_dist, aspect, area_ratio] + z[:6]
         a.append(b)
     return a
 
