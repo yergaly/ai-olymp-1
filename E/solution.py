@@ -1,30 +1,26 @@
-import sklearn, re
+import re
 import pandas as pd
 import numpy as np
 
 from sklearn.pipeline import make_pipeline
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression, RidgeClassifier, SGDClassifier
-from sklearn.svm import LinearSVC
-from sklearn.naive_bayes import ComplementNB, MultinomialNB
-from sklearn.ensemble import RandomForestClassifier, VotingClassifier
+from sklearn.naive_bayes import ComplementNB
 
 def clean(text):
     text = text.lower()
     text = re.sub(r'[^a-z\s]', '', text)
     return text
 
+
 def extract_features(text_list):
     return text_list
 
 
-
-class Model():
+class Model:
     def __init__(self):
-        clf1 = ComplementNB(alpha=0.5, fit_prior=True)
-        clf2 = ComplementNB(alpha=0.3, fit_prior=True)
-        clf3 = ComplementNB(alpha=0.1, fit_prior=True)
-        
+        clf = ComplementNB(alpha=0.3, fit_prior=False, norm=True)
+
+
         self.classifier = make_pipeline(
             TfidfVectorizer(
                 ngram_range=(1, 3),
@@ -33,14 +29,16 @@ class Model():
                 sublinear_tf=True,
                 dtype=np.float32
             ),
-            VotingClassifier(
-                estimators=[('nb1', clf1),('nb2', clf2),('nb3', clf3)],voting='hard'))
+            clf
+        )
+
 
     def fit(self, X_list, y_list):
         self.classifier.fit(X_list, y_list)
 
     def predict(self, X_list):
         return self.classifier.predict(X_list).tolist()
+
 
 
 
@@ -52,28 +50,6 @@ def extract_features1(text_list):
         feature = words[0]
         feature_list.append(feature)
     return feature_list
-
-
-# REPLACE TO YOUR MODEL
-class Model1():
-    def __init__(self):
-        self.vocab = dict()
-
-    def fit(self, X_list, y_list):
-        for X, y in zip(X_list, y_list):
-            self.vocab[X] = y
-        self.default_category = y
-
-    def predict_sample(self, X):
-        if X in self.vocab:
-            return self.vocab[X]
-        return self.default_category
-
-    def predict(self, X_list):
-        answer = []
-        for X in X_list:
-            answer.append(self.predict_sample(X))
-        return answer
 
 
 def read_data_known(file_path):
@@ -106,17 +82,14 @@ def read_data(file_path):
     return X_train, y_train, X_test
 
 
-
-MODE = "LOCAL" # "SUBMIT" OR "LOCAL"
-
+MODE = "LOCAL"  # "SUBMIT" OR "LOCAL"
 
 # READ DATA
-if MODE == "LOCAL":
+if MODE == "s":
     X_train, y_train, X_test, y_test = read_data_known("input.txt")
 else:
     X_train, y_train, X_test = read_data("input.txt")
     y_test = None
-
 
 # TRAIN MODEL
 model = Model()
@@ -128,7 +101,6 @@ if y_test:
     ok = (np.array(y_test) == np.array(y_predict)).sum()
     accuracy = ok / len(y_test) * 100
     print("ACCURACY:", accuracy)
-
 
 # WRITE ANSWER
 with open("output.txt", "w") as f:
